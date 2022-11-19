@@ -374,7 +374,7 @@ def read_sharded_v2(state, dir, checkpoint_hosts, state_shard):
     # head_print("state_shard", jax.tree_structure(state_shard))
     # head_print("values", jax.tree_structure(values[0]))
 
-    return jax.tree_multimap(reshard_v2, *([state, state_shard] + values))
+    return jax.tree_map(reshard_v2, *([state, state_shard] + values))
 
 
 def load_ckpt_v2(model_state, dir, state_shard, load_opt):
