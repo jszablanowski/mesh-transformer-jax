@@ -1,6 +1,6 @@
 import jax
-import tensorflow as tf
 import numpy as np
+import tensorflow as tf
 from transformers import GPT2TokenizerFast
 import itertools
 

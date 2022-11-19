@@ -1,0 +1,25 @@
+jax devices: 8
+jax runtime initialized in 3.61288s
+`--tune_model_path` passed: we are beginning a fine-tuning run
+path to load checkpoint from: gs://minipilot-bucket/step_383500/
+setting up datasets
+jax devices: 8
+jax runtime initialized in 4.118s
+`--tune_model_path` passed: we are beginning a fine-tuning run
+path to load checkpoint from: gs://minipilot-bucket/step_383500/
+setting up datasets
+initializing network
+key shape (8, 2)
+in shape (1, 2048)
+dp 1
+mp 8
+jax devices: 8
+jax runtime initialized in 3.90498s
+`--tune_model_path` passed: we are beginning a fine-tuning run
+path to load checkpoint from: gs://minipilot-bucket/step_383500/
+setting up datasets
+initializing network
+key shape (8, 2)
+in shape (1, 2048)
+dp 1
+mp 8

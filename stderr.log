@@ -1,0 +1,677 @@
+Traceback (most recent call last):
+  File "device_train.py", line 5, in <module>
+    import jax
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/__init__.py", line 33, in <module>
+    from .config import (config, enable_checks, check_tracer_leaks, checking_leaks,
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/config.py", line 26, in <module>
+    from jax import lib
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/lib/__init__.py", line 60, in <module>
+    from jaxlib import pocketfft
+ImportError: cannot import name 'pocketfft' from 'jaxlib' (/home/jszablanowski/.local/lib/python3.8/site-packages/jaxlib/__init__.py)
+Traceback (most recent call last):
+  File "device_train.py", line 7, in <module>
+    import optax
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/__init__.py", line 17, in <module>
+    from optax._src.alias import adabelief
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/alias.py", line 21, in <module>
+    from optax._src import base
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/base.py", line 18, in <module>
+    import chex
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/__init__.py", line 17, in <module>
+    from chex._src.asserts import assert_axis_dimension
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts.py", line 26, in <module>
+    from chex._src import asserts_internal as _ai
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts_internal.py", line 34, in <module>
+    from chex._src import pytypes
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py", line 36, in <module>
+    PRNGKey = jax.random.KeyArray
+AttributeError: module 'jax.random' has no attribute 'KeyArray'
+Traceback (most recent call last):
+  File "device_train.py", line 14, in <module>
+    from mesh_transformer.checkpoint import read_ckpt, write_ckpt
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/checkpoint.py", line 11, in <module>
+    import ray
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/ray/__init__.py", line 72, in <module>
+    import ray._raylet  # noqa: E402
+  File "python/ray/_raylet.pyx", line 108, in init ray._raylet
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/ray/exceptions.py", line 7, in <module>
+    from ray.core.generated.common_pb2 import RayException, Language, PYTHON
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/ray/core/generated/common_pb2.py", line 33, in <module>
+    _descriptor.EnumValueDescriptor(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/google/protobuf/descriptor.py", line 755, in __new__
+    _message.Message._CheckCalledFromGeneratedFile()
+TypeError: Descriptors cannot not be created directly.
+If this call came from a _pb2.py file, your generated code is out of date and must be regenerated with protoc >= 3.19.0.
+If you cannot immediately regenerate your protos, some other possible workarounds are:
+ 1. Downgrade the protobuf package to 3.20.x or lower.
+ 2. Set PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python (but this will use pure-Python parsing and will be much slower).
+
+More information: https://developers.google.com/protocol-buffers/docs/news/2022-05-06#python-updates
+2022-11-19 21:14:59.822299: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+RuntimeError: module compiled against API version 0xe but this version of numpy is 0xd
+ImportError: numpy.core.multiarray failed to import
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <built-in method __contains__ of dict object at 0x7f622244a1c0> returned a result with an error set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 16, in <module>
+    from tfrecord_loader import TFRecordNewInputs
+  File "/home/jszablanowski/mesh-transformer-jax/tfrecord_loader.py", line 2, in <module>
+    import tensorflow as tf
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/__init__.py", line 37, in <module>
+    from tensorflow.python.tools import module_util as _module_util
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/__init__.py", line 37, in <module>
+    from tensorflow.python.eager import context
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/eager/context.py", line 34, in <module>
+    from tensorflow.python.client import pywrap_tf_session
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/client/pywrap_tf_session.py", line 19, in <module>
+    from tensorflow.python.client._pywrap_tf_session import *
+ImportError: initialization failed
+2022-11-19 21:16:40.518733: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:16:41.245546: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:16:41.245666: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:16:41.245680: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+Traceback (most recent call last):
+  File "device_train.py", line 191, in <module>
+    raise ValueError(msg)
+ValueError: each shard needs a separate device, but device count (1) < shard count (8)
+2022-11-19 21:18:26.509639: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:18:26.654057: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:18:26.654093: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-11-19 21:18:27.320010: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:18:27.320135: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:18:27.320152: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-11-19 21:18:27.962976: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x1506d00 initialized for platform Interpreter (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:18:27.963012: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Interpreter, <undefined>
+2022-11-19 21:18:27.973751: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x6ab2820 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:18:27.973779: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Host, Default Version
+2022-11-19 21:18:27.978818: I external/org_tensorflow/tensorflow/stream_executor/tpu/tpu_platform_interface.cc:74] No TPU platform found.
+WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+Traceback (most recent call last):
+  File "device_train.py", line 191, in <module>
+    raise ValueError(msg)
+ValueError: each shard needs a separate device, but device count (1) < shard count (8)
+2022-11-19 21:19:45.183059: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:19:45.328541: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:19:45.328576: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+RuntimeError: module compiled against API version 0xe but this version of numpy is 0xd
+ImportError: numpy.core.multiarray failed to import
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <built-in method __contains__ of dict object at 0x7fcb77519ec0> returned a result with an error set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 16, in <module>
+    from tfrecord_loader import TFRecordNewInputs
+  File "/home/jszablanowski/mesh-transformer-jax/tfrecord_loader.py", line 2, in <module>
+    import tensorflow as tf
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/__init__.py", line 37, in <module>
+    from tensorflow.python.tools import module_util as _module_util
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/__init__.py", line 37, in <module>
+    from tensorflow.python.eager import context
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/eager/context.py", line 34, in <module>
+    from tensorflow.python.client import pywrap_tf_session
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/client/pywrap_tf_session.py", line 19, in <module>
+    from tensorflow.python.client._pywrap_tf_session import *
+ImportError: initialization failed
+2022-11-19 21:21:14.313147: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:21:14.461731: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:21:14.461767: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+RuntimeError: module compiled against API version 0xe but this version of numpy is 0xd
+ImportError: numpy.core.multiarray failed to import
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <built-in method __contains__ of dict object at 0x7f2fb5055080> returned a result with an error set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 16, in <module>
+    from tfrecord_loader import TFRecordNewInputs
+  File "/home/jszablanowski/mesh-transformer-jax/tfrecord_loader.py", line 2, in <module>
+    import tensorflow as tf
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/__init__.py", line 37, in <module>
+    from tensorflow.python.tools import module_util as _module_util
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/__init__.py", line 37, in <module>
+    from tensorflow.python.eager import context
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/eager/context.py", line 34, in <module>
+    from tensorflow.python.client import pywrap_tf_session
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/client/pywrap_tf_session.py", line 19, in <module>
+    from tensorflow.python.client._pywrap_tf_session import *
+ImportError: initialization failed
+2022-11-19 21:23:14.195308: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:23:14.342194: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:23:14.342229: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+RuntimeError: module compiled against API version 0xe but this version of numpy is 0xd
+ImportError: numpy.core.multiarray failed to import
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <built-in method __contains__ of dict object at 0x7f76213d05c0> returned a result with an error set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 16, in <module>
+    from tfrecord_loader import TFRecordNewInputs
+  File "/home/jszablanowski/mesh-transformer-jax/tfrecord_loader.py", line 2, in <module>
+    import tensorflow as tf
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/__init__.py", line 37, in <module>
+    from tensorflow.python.tools import module_util as _module_util
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/__init__.py", line 37, in <module>
+    from tensorflow.python.eager import context
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/eager/context.py", line 34, in <module>
+    from tensorflow.python.client import pywrap_tf_session
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/client/pywrap_tf_session.py", line 19, in <module>
+    from tensorflow.python.client._pywrap_tf_session import *
+ImportError: initialization failed
+2022-11-19 21:24:18.257053: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:24:18.405693: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:24:18.405737: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+RuntimeError: module compiled against API version 0xe but this version of numpy is 0xd
+ImportError: numpy.core.multiarray failed to import
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <built-in method __contains__ of dict object at 0x7fa2508193c0> returned a result with an error set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 16, in <module>
+    from tfrecord_loader import TFRecordNewInputs
+  File "/home/jszablanowski/mesh-transformer-jax/tfrecord_loader.py", line 3, in <module>
+    import tensorflow as tf
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/__init__.py", line 37, in <module>
+    from tensorflow.python.tools import module_util as _module_util
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/__init__.py", line 37, in <module>
+    from tensorflow.python.eager import context
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/eager/context.py", line 34, in <module>
+    from tensorflow.python.client import pywrap_tf_session
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/tensorflow/python/client/pywrap_tf_session.py", line 19, in <module>
+    from tensorflow.python.client._pywrap_tf_session import *
+ImportError: initialization failed
+2022-11-19 21:25:05.998433: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:25:06.145781: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:25:06.145819: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-11-19 21:25:06.822035: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:25:06.822161: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:25:06.822183: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-11-19 21:25:07.442507: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x2a7ed00 initialized for platform Interpreter (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:25:07.442546: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Interpreter, <undefined>
+2022-11-19 21:25:07.453460: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x7e9cb60 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:25:07.453499: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Host, Default Version
+2022-11-19 21:25:07.459084: I external/org_tensorflow/tensorflow/stream_executor/tpu/tpu_platform_interface.cc:74] No TPU platform found.
+WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+Traceback (most recent call last):
+  File "device_train.py", line 191, in <module>
+    raise ValueError(msg)
+ValueError: each shard needs a separate device, but device count (1) < shard count (8)
+/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+Traceback (most recent call last):
+  File "device_train.py", line 7, in <module>
+    import optax
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/__init__.py", line 17, in <module>
+    from optax._src.alias import adabelief
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/alias.py", line 21, in <module>
+    from optax._src import base
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/base.py", line 18, in <module>
+    import chex
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/__init__.py", line 17, in <module>
+    from chex._src.asserts import assert_axis_dimension
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts.py", line 26, in <module>
+    from chex._src import asserts_internal as _ai
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts_internal.py", line 32, in <module>
+    from chex._src import pytypes
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py", line 40, in <module>
+    CpuDevice = jax.lib.xla_extension.CpuDevice
+AttributeError: module 'jaxlib.xla_extension' has no attribute 'CpuDevice'
+2022-11-19 21:26:50.282653: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:26:50.444200: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:26:50.444237: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-11-19 21:26:51.102831: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:26:51.102937: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:26:51.102945: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-11-19 21:26:51.708832: I external/org_tensorflow/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc:275] Libtpu path is: /home/jszablanowski/.local/lib/python3.8/site-packages/libtpu/libtpu.so
+2022-11-19 21:26:51.884120: I external/org_tensorflow/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc:227] GetTpuPjrtApi not found
+2022-11-19 21:26:55.302648: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x7bd0480 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:26:55.302700: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): TPU, 2a886c8
+2022-11-19 21:26:55.302708: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (1): TPU, 2a886c8
+2022-11-19 21:26:55.302712: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (2): TPU, 2a886c8
+2022-11-19 21:26:55.302717: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (3): TPU, 2a886c8
+2022-11-19 21:26:55.302722: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (4): TPU, 2a886c8
+2022-11-19 21:26:55.302726: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (5): TPU, 2a886c8
+2022-11-19 21:26:55.302730: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (6): TPU, 2a886c8
+2022-11-19 21:26:55.302735: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (7): TPU, 2a886c8
+2022-11-19 21:26:55.320975: I external/org_tensorflow/tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.cc:215] TfrtCpuClient created.
+/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+Traceback (most recent call last):
+  File "device_train.py", line 257, in <module>
+    with jax.experimental.maps.mesh(devices, ('dp', 'mp')):
+AttributeError: module 'jax.experimental.maps' has no attribute 'mesh'
+2022-11-19 21:26:55.656584: I external/org_tensorflow/tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.cc:218] TfrtCpuClient destroyed.
+2022-11-19 21:27:30.540595: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:27:30.708390: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:27:30.708423: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-11-19 21:27:31.390916: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:27:31.391042: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:27:31.391067: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-11-19 21:27:32.029490: I external/org_tensorflow/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc:275] Libtpu path is: /home/jszablanowski/.local/lib/python3.8/site-packages/libtpu/libtpu.so
+2022-11-19 21:27:32.177362: I external/org_tensorflow/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc:227] GetTpuPjrtApi not found
+2022-11-19 21:27:36.129047: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x9458300 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:27:36.129089: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): TPU, 2a886c8
+2022-11-19 21:27:36.129095: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (1): TPU, 2a886c8
+2022-11-19 21:27:36.129100: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (2): TPU, 2a886c8
+2022-11-19 21:27:36.129105: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (3): TPU, 2a886c8
+2022-11-19 21:27:36.129109: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (4): TPU, 2a886c8
+2022-11-19 21:27:36.129114: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (5): TPU, 2a886c8
+2022-11-19 21:27:36.129118: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (6): TPU, 2a886c8
+2022-11-19 21:27:36.129124: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (7): TPU, 2a886c8
+2022-11-19 21:27:36.146928: I external/org_tensorflow/tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.cc:215] TfrtCpuClient created.
+/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/lib/xla_bridge.py:553: UserWarning: jax.host_count has been renamed to jax.process_count. This alias will eventually be removed; please update your code.
+  warnings.warn(
+/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/lib/xla_bridge.py:540: UserWarning: jax.host_id has been renamed to jax.process_index. This alias will eventually be removed; please update your code.
+  warnings.warn(
+Traceback (most recent call last):
+  File "device_train.py", line 259, in <module>
+    network = CausalTransformer(params)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 277, in __init__
+    self.state = self.init_xmap(jnp.array(key.take(mp_per_host)), x)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 182, in init
+    params = param_init_fn(key, x, x)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 113, in init_fn
+    params, state = f.init(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 364, in init_fn
+    f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 96, in wrapper
+    jax.eval_shape(pure_fun, params, state, rng, *args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 93, in pure_fun
+    return fun(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 178, in train_loss
+    return transformer.loss(x, y)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 65, in loss
+    loss, correct = self.eval(ctx, tgt, float(z_loss), mask=mask)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 57, in eval
+    x = hk.remat(self.embed)(context)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 361, in wrapper
+    out, state = dec_stateful_fun(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 162, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/ad_checkpoint.py", line 265, in fun_remat
+    jaxpr, consts, out_tree = _trace_to_jaxpr(fun_, in_tree, tuple(in_avals))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/ad_checkpoint.py", line 348, in _trace_to_jaxpr
+    jaxpr, _, consts = pe.trace_to_jaxpr_dynamic(flat_fun, in_avals, debug)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1981, in trace_to_jaxpr_dynamic
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1998, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 354, in stateful_fun
+    return out, difference(state_in, internal_state())
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 313, in difference
+    params_after = jax.tree_multimap(functools.partial(if_changed, is_new_param),
+jax._src.traceback_util.UnfilteredStackTrace: AttributeError: module 'jax' has no attribute 'tree_multimap'
+
+The stack trace below excludes JAX-internal frames.
+The preceding is the original exception that occurred, unmodified.
+
+--------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 259, in <module>
+    network = CausalTransformer(params)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 277, in __init__
+    self.state = self.init_xmap(jnp.array(key.take(mp_per_host)), x)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 625, in fun_mapped
+    out_flat = xmap_p.bind(fun_flat, *args_flat, **params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 849, in bind
+    return core.map_bind(self, fun, *args, in_axes=in_axes, **params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/core.py", line 2168, in map_bind
+    primitive.process(top_trace, fun, tracers, params))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 852, in process
+    return trace.process_xmap(self, fun, tracers, params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/core.py", line 715, in process_call
+    return primitive.impl(f, *tracers, **params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 653, in xmap_impl
+    xmap_callable = make_xmap_callable(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 303, in memoized_fun
+    ans = call(fun, *args)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 681, in make_xmap_callable
+    jaxpr, out_avals, consts = pe.trace_to_jaxpr_final(fun, mapped_in_avals)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 2065, in trace_to_jaxpr_final
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1998, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 182, in init
+    params = param_init_fn(key, x, x)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 113, in init_fn
+    params, state = f.init(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 364, in init_fn
+    f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 96, in wrapper
+    jax.eval_shape(pure_fun, params, state, rng, *args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/api.py", line 3201, in eval_shape
+    out = pe.abstract_eval_fun(wrapped_fun.call_wrapped,
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 660, in abstract_eval_fun
+    _, avals_out, _ = trace_to_jaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1981, in trace_to_jaxpr_dynamic
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1998, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 93, in pure_fun
+    return fun(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 178, in train_loss
+    return transformer.loss(x, y)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 65, in loss
+    loss, correct = self.eval(ctx, tgt, float(z_loss), mask=mask)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 57, in eval
+    x = hk.remat(self.embed)(context)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 361, in wrapper
+    out, state = dec_stateful_fun(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 354, in stateful_fun
+    return out, difference(state_in, internal_state())
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 313, in difference
+    params_after = jax.tree_multimap(functools.partial(if_changed, is_new_param),
+AttributeError: module 'jax' has no attribute 'tree_multimap'
+2022-11-19 21:27:37.206730: I external/org_tensorflow/tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.cc:218] TfrtCpuClient destroyed.
+Traceback (most recent call last):
+  File "device_train.py", line 7, in <module>
+    import optax
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/__init__.py", line 17, in <module>
+    from optax._src.alias import adabelief
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/alias.py", line 21, in <module>
+    from optax._src import base
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/base.py", line 18, in <module>
+    import chex
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/__init__.py", line 17, in <module>
+    from chex._src.asserts import assert_axis_dimension
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts.py", line 26, in <module>
+    from chex._src import asserts_internal as _ai
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts_internal.py", line 34, in <module>
+    from chex._src import pytypes
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py", line 36, in <module>
+    PRNGKey = jax.random.KeyArray
+AttributeError: module 'jax.random' has no attribute 'KeyArray'
+2022-11-19 21:33:50.075929: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:33:50.221975: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:33:50.222013: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-11-19 21:33:50.890426: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:33:50.890532: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:33:50.890541: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-11-19 21:33:51.505424: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x241cd00 initialized for platform Interpreter (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:33:51.505467: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Interpreter, <undefined>
+2022-11-19 21:33:51.517035: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x79be820 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:33:51.517075: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): Host, Default Version
+2022-11-19 21:33:51.522605: I external/org_tensorflow/tensorflow/stream_executor/tpu/tpu_platform_interface.cc:74] No TPU platform found.
+WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+Traceback (most recent call last):
+  File "device_train.py", line 191, in <module>
+    raise ValueError(msg)
+ValueError: each shard needs a separate device, but device count (1) < shard count (8)
+/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+Traceback (most recent call last):
+  File "device_train.py", line 7, in <module>
+    import optax
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/__init__.py", line 17, in <module>
+    from optax._src.alias import adabelief
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/alias.py", line 21, in <module>
+    from optax._src import base
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/base.py", line 18, in <module>
+    import chex
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/__init__.py", line 17, in <module>
+    from chex._src.asserts import assert_axis_dimension
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts.py", line 26, in <module>
+    from chex._src import asserts_internal as _ai
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts_internal.py", line 32, in <module>
+    from chex._src import pytypes
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py", line 40, in <module>
+    CpuDevice = jax.lib.xla_extension.CpuDevice
+AttributeError: module 'jaxlib.xla_extension' has no attribute 'CpuDevice'
+/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+Traceback (most recent call last):
+  File "device_train.py", line 7, in <module>
+    import optax
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/__init__.py", line 17, in <module>
+    from optax import experimental
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/experimental/__init__.py", line 20, in <module>
+    from optax._src.experimental.complex_valued import split_real_and_imaginary
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/optax/_src/experimental/complex_valued.py", line 32, in <module>
+    import chex
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/__init__.py", line 17, in <module>
+    from chex._src.asserts import assert_axis_dimension
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts.py", line 26, in <module>
+    from chex._src import asserts_internal as _ai
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/asserts_internal.py", line 32, in <module>
+    from chex._src import pytypes
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/chex/_src/pytypes.py", line 40, in <module>
+    CpuDevice = jax.lib.xla_extension.CpuDevice
+AttributeError: module 'jaxlib.xla_extension' has no attribute 'CpuDevice'
+Traceback (most recent call last):
+  File "device_train.py", line 13, in <module>
+    from mesh_transformer import util
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/util.py", line 36, in <module>
+    class ClipByGlobalNormState(OptState):
+  File "/usr/lib/python3.8/typing.py", line 317, in __new__
+    raise TypeError(f"Cannot subclass {cls!r}")
+TypeError: Cannot subclass <class 'typing._SpecialForm'>
+Traceback (most recent call last):
+  File "device_train.py", line 13, in <module>
+    from mesh_transformer import util
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/util.py", line 36, in <module>
+    class ClipByGlobalNormState(OptState):
+  File "/usr/lib/python3.8/typing.py", line 317, in __new__
+    raise TypeError(f"Cannot subclass {cls!r}")
+TypeError: Cannot subclass <class 'typing._SpecialForm'>
+2022-11-19 21:40:35.027806: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-11-19 21:40:35.189173: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:40:35.189214: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2022-11-19 21:40:35.849099: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:40:35.849205: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: :/usr/local/lib
+2022-11-19 21:40:35.849214: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2022-11-19 21:40:36.456094: I external/org_tensorflow/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc:275] Libtpu path is: /home/jszablanowski/.local/lib/python3.8/site-packages/libtpu/libtpu.so
+2022-11-19 21:40:36.611097: I external/org_tensorflow/tensorflow/compiler/xla/stream_executor/tpu/tpu_initializer_helper.cc:227] GetTpuPjrtApi not found
+2022-11-19 21:40:40.341440: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:169] XLA service 0x8010480 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-11-19 21:40:40.341494: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (0): TPU, 2a886c8
+2022-11-19 21:40:40.341501: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (1): TPU, 2a886c8
+2022-11-19 21:40:40.341505: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (2): TPU, 2a886c8
+2022-11-19 21:40:40.341512: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (3): TPU, 2a886c8
+2022-11-19 21:40:40.341517: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (4): TPU, 2a886c8
+2022-11-19 21:40:40.341521: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (5): TPU, 2a886c8
+2022-11-19 21:40:40.341525: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (6): TPU, 2a886c8
+2022-11-19 21:40:40.341529: I external/org_tensorflow/tensorflow/compiler/xla/service/service.cc:177]   StreamExecutor device (7): TPU, 2a886c8
+2022-11-19 21:40:40.360271: I external/org_tensorflow/tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.cc:215] TfrtCpuClient created.
+/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/data_structures.py:37: FutureWarning: jax.tree_structure is deprecated, and will be removed in a future release. Use jax.tree_util.tree_structure instead.
+  PyTreeDef = type(jax.tree_structure(None))
+/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/lib/xla_bridge.py:553: UserWarning: jax.host_count has been renamed to jax.process_count. This alias will eventually be removed; please update your code.
+  warnings.warn(
+/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/lib/xla_bridge.py:540: UserWarning: jax.host_id has been renamed to jax.process_index. This alias will eventually be removed; please update your code.
+  warnings.warn(
+Traceback (most recent call last):
+  File "device_train.py", line 259, in <module>
+    network = CausalTransformer(params)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 277, in __init__
+    self.state = self.init_xmap(jnp.array(key.take(mp_per_host)), x)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 182, in init
+    params = param_init_fn(key, x, x)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 113, in init_fn
+    params, state = f.init(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 364, in init_fn
+    f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 96, in wrapper
+    jax.eval_shape(pure_fun, params, state, rng, *args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 93, in pure_fun
+    return fun(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 178, in train_loss
+    return transformer.loss(x, y)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 65, in loss
+    loss, correct = self.eval(ctx, tgt, float(z_loss), mask=mask)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 57, in eval
+    x = hk.remat(self.embed)(context)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 361, in wrapper
+    out, state = dec_stateful_fun(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/traceback_util.py", line 162, in reraise_with_filtered_traceback
+    return fun(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/ad_checkpoint.py", line 265, in fun_remat
+    jaxpr, consts, out_tree = _trace_to_jaxpr(fun_, in_tree, tuple(in_avals))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/ad_checkpoint.py", line 348, in _trace_to_jaxpr
+    jaxpr, _, consts = pe.trace_to_jaxpr_dynamic(flat_fun, in_avals, debug)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1981, in trace_to_jaxpr_dynamic
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1998, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 354, in stateful_fun
+    return out, difference(state_in, internal_state())
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 313, in difference
+    params_after = jax.tree_multimap(functools.partial(if_changed, is_new_param),
+jax._src.traceback_util.UnfilteredStackTrace: AttributeError: module 'jax' has no attribute 'tree_multimap'
+
+The stack trace below excludes JAX-internal frames.
+The preceding is the original exception that occurred, unmodified.
+
+--------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "device_train.py", line 259, in <module>
+    network = CausalTransformer(params)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 277, in __init__
+    self.state = self.init_xmap(jnp.array(key.take(mp_per_host)), x)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 625, in fun_mapped
+    out_flat = xmap_p.bind(fun_flat, *args_flat, **params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 849, in bind
+    return core.map_bind(self, fun, *args, in_axes=in_axes, **params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/core.py", line 2168, in map_bind
+    primitive.process(top_trace, fun, tracers, params))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 852, in process
+    return trace.process_xmap(self, fun, tracers, params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/core.py", line 715, in process_call
+    return primitive.impl(f, *tracers, **params)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 653, in xmap_impl
+    xmap_callable = make_xmap_callable(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 303, in memoized_fun
+    ans = call(fun, *args)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/experimental/maps.py", line 681, in make_xmap_callable
+    jaxpr, out_avals, consts = pe.trace_to_jaxpr_final(fun, mapped_in_avals)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 2065, in trace_to_jaxpr_final
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1998, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 182, in init
+    params = param_init_fn(key, x, x)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 113, in init_fn
+    params, state = f.init(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/transform.py", line 364, in init_fn
+    f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 96, in wrapper
+    jax.eval_shape(pure_fun, params, state, rng, *args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/api.py", line 3201, in eval_shape
+    out = pe.abstract_eval_fun(wrapped_fun.call_wrapped,
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 660, in abstract_eval_fun
+    _, avals_out, _ = trace_to_jaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/_src/profiler.py", line 314, in wrapper
+    return func(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1981, in trace_to_jaxpr_dynamic
+    jaxpr, out_avals, consts = trace_to_subjaxpr_dynamic(
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/interpreters/partial_eval.py", line 1998, in trace_to_subjaxpr_dynamic
+    ans = fun.call_wrapped(*in_tracers_)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/jax/linear_util.py", line 167, in call_wrapped
+    ans = self.f(*args, **dict(self.params, **kwargs))
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/random.py", line 93, in pure_fun
+    return fun(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 178, in train_loss
+    return transformer.loss(x, y)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 65, in loss
+    loss, correct = self.eval(ctx, tgt, float(z_loss), mask=mask)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 428, in wrapped
+    out = f(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/module.py", line 279, in run_interceptors
+    return bound_method(*args, **kwargs)
+  File "/home/jszablanowski/mesh-transformer-jax/mesh_transformer/transformer_shard.py", line 57, in eval
+    x = hk.remat(self.embed)(context)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 361, in wrapper
+    out, state = dec_stateful_fun(*args, **kwargs)
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 354, in stateful_fun
+    return out, difference(state_in, internal_state())
+  File "/home/jszablanowski/.local/lib/python3.8/site-packages/haiku/_src/stateful.py", line 313, in difference
+    params_after = jax.tree_multimap(functools.partial(if_changed, is_new_param),
+AttributeError: module 'jax' has no attribute 'tree_multimap'
+2022-11-19 21:40:41.376319: I external/org_tensorflow/tensorflow/compiler/xla/pjrt/tfrt_cpu_pjrt_client.cc:218] TfrtCpuClient destroyed.
