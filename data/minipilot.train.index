@@ -1,5 +1,1 @@
-gs://minipilot-bucket/fine_tune_data/data1_3418398.tfrecords
-gs://minipilot-bucket/fine_tune_data/data2_1907778.tfrecords
-gs://minipilot-bucket/fine_tune_data/data3_2286110.tfrecords
-gs://minipilot-bucket/fine_tune_data/data4_2210861.tfrecords
-gs://minipilot-bucket/fine_tune_data/data5_2224666.tfrecords
+gs://minipilot-bucket/small_133947.tfrecords

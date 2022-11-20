@@ -8,7 +8,7 @@ import optax
 
 import wandb
 from tqdm import tqdm
-
+import os
 
 from mesh_transformer import util
 from mesh_transformer.checkpoint import read_ckpt, write_ckpt
@@ -20,6 +20,7 @@ from google.cloud.exceptions import NotFound
 
 from mesh_transformer.util import clip_by_global_norm, additive_weight_decay
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "central-weft-368922-625527d08fef.json"
 
 def parse_args():
     # Parse command line arguments
@@ -50,10 +51,8 @@ def parse_args():
 def save(network, step, bucket, path, mp, aux=None, keep_n=3, delete_old=True):
     assert path
     client = storage.Client()
-
     if aux is None:
         aux = {}
-
     try:
         with open(f"gs://{bucket}/{path}/meta.json", "r") as f:
             meta = json.load(f)
@@ -254,7 +253,7 @@ if __name__ == "__main__":
     tokens_per_step = params['seq'] * sequences_per_step
 
     # load + run
-    with jax.experimental.maps.Mesh(devices, ('dp', 'mp')):
+    with jax.experimental.maps.mesh(devices, ('dp', 'mp')):
         print("initializing network")
         network = CausalTransformer(params)
 

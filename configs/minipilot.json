@@ -12,12 +12,12 @@
   "per_replica_batch": 1,
   "gradient_accumulation_steps": 32,
 
-  "warmup_steps": 30000,
-  "anneal_steps": 346495,
+  "warmup_steps": 300,
+  "anneal_steps": 3886,
   "lr": 5e-5,
   "end_lr": 1e-5,
   "weight_decay": 0.1,
-  "total_steps": 376495,
+  "total_steps": 4186,
 
   "tpu_size": 8,
 
@@ -33,10 +33,10 @@
 
   "val_batches": 0,
   "val_every": 400000,
-  "ckpt_every": 376495,
-  "keep_every": 376495,
+  "ckpt_every": 4186,
+  "keep_every": 4186,
 
-  "name": "minipilot",
-  "wandb_project": "mesh-transformer-jax",
+  "name": "minipilot-gpt-j",
+  "wandb_project": "minipilot",
   "comment": ""
 }
