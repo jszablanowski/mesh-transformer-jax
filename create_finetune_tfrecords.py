@@ -46,6 +46,8 @@ def parse_args():
     cleaning_args.add_argument("--normalize-with-ftfy", action="store_true", help="Normalize text with ftfy")
     cleaning_args.add_argument("--normalize-with-wikitext-detokenize",
                                action="store_true", help="Use wikitext detokenizer")
+    cleaning_args.add_argument("--normalize-with-copyright-detokenize",
+                               action="store_true", help="Use source code copyright detokenizer")
     minu_help = "Exclude repetitive documents made up of < MIN_UNIQUE_TOKENS unique tokens. These can produce large gradients."
     minu_help += " Set <= 0 to disable. If enabled, 200 is a good default value. (Default: 0)"
     cleaning_args.add_argument("--min-unique-tokens", type=int, default=0,
@@ -129,6 +131,11 @@ def wikitext_detokenizer(string):
     return string
 
 
+def copyright_detokenizer(string):
+    string = re.sub("#\s*(C|c)opyright.*(\s*#.*(\n))+\n", "", string)
+    return string
+
+
 def _int64_feature(value):
     """
     Returns an int64_list from a bool / enum / int / uint.
@@ -177,7 +184,7 @@ def eot_splitting_generator(string_iterable, encoder):
                 yield d
 
 
-def prep_and_tokenize_generator(string_iterable, encoder, normalize_with_ftfy, normalize_with_wikitext_detokenize):
+def prep_and_tokenize_generator(string_iterable, encoder, normalize_with_ftfy, normalize_with_wikitext_detokenize, normalize_with_copyright_detokenize):
     """
     Given strings, does data cleaning / tokenization and yields arrays of tokens
     """
@@ -186,6 +193,8 @@ def prep_and_tokenize_generator(string_iterable, encoder, normalize_with_ftfy, n
             doc = ftfy.fix_text(doc, normalization='NFKC')
         if normalize_with_wikitext_detokenize:
             doc = wikitext_detokenizer(doc)
+        if normalize_with_copyright_detokenize:
+            doc = copyright_detokenizer(doc)
         tokens = encoder.encode(doc) + [encoder.eos_token_id]
         yield tokens
 
@@ -203,7 +212,8 @@ def file_to_tokenized_docs_generator(file_path, encoder, args):
     token_list_gen = prep_and_tokenize_generator(string_iterable,
                                                  encoder,
                                                  normalize_with_ftfy=args.normalize_with_ftfy,
-                                                 normalize_with_wikitext_detokenize=args.normalize_with_wikitext_detokenize
+                                                 normalize_with_wikitext_detokenize=args.normalize_with_wikitext_detokenize,
+                                                 normalize_with_copyright_detokenize=args.normalize_with_copyright_detokenize
                                                  )
     return token_list_gen
 
