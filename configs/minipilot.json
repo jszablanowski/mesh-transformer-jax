@@ -12,16 +12,16 @@
   "per_replica_batch": 1,
   "gradient_accumulation_steps": 32,
 
-  "warmup_steps": 300,
-  "anneal_steps": 3886,
+  "warmup_steps": 3000,
+  "anneal_steps": 36637,
   "lr": 5e-5,
   "end_lr": 1e-5,
   "weight_decay": 0.1,
-  "total_steps": 4186,
+  "total_steps": 39637,
 
   "tpu_size": 8,
 
-  "bucket": "minipilot-bucket",
+  "bucket": "minipilot-gpt-j",
   "model_dir": "minipilot",
 
   "train_set": "minipilot.train.index",
@@ -33,8 +33,8 @@
 
   "val_batches": 0,
   "val_every": 400000,
-  "ckpt_every": 4186,
-  "keep_every": 4186,
+  "ckpt_every": 4200,
+  "keep_every": 4200,
 
   "name": "minipilot-gpt-j",
   "wandb_project": "minipilot",

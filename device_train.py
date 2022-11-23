@@ -20,7 +20,7 @@ from google.cloud.exceptions import NotFound
 
 from mesh_transformer.util import clip_by_global_norm, additive_weight_decay
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "central-weft-368922-625527d08fef.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "xenon-lantern-369320-5494cd11fbe6.json"
 
 def parse_args():
     # Parse command line arguments

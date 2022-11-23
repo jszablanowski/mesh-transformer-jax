@@ -1,1 +1,6 @@
-gs://minipilot-bucket/small_133947.tfrecords
+gs://minipilot-gpt-j/fine_tune_data/file54_132881.tfrecords
+gs://minipilot-gpt-j/fine_tune_data/file01_222032.tfrecords
+gs://minipilot-gpt-j/fine_tune_data/file02_227370.tfrecords
+gs://minipilot-gpt-j/fine_tune_data/file03_228071.tfrecords
+gs://minipilot-gpt-j/fine_tune_data/file04_228632.tfrecords
+gs://minipilot-gpt-j/fine_tune_data/file05_229397.tfrecords
