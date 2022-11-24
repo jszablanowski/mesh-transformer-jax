@@ -7,8 +7,8 @@ pipe = pipeline(
 
 
 while True:
-    input("Make changes to file ./test.py and click ENTER")
-    with open("test.py", "r") as txt_file:
+    input("Make changes to file ./test_gpt2.py and click ENTER")
+    with open("test_gpt2.py", "r") as txt_file:
         context = txt_file.read()
     
     print(context)
