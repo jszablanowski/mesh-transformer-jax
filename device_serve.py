@@ -222,7 +222,7 @@ if __name__ == "__main__":
 
             output = network.generate(np.array(all_tokenized),
                                       np.array(all_length),
-                                      16,
+                                      32,
                                       {
                                           "top_p": np.array(all_top_p),
                                           "temp": np.array(all_temp)
