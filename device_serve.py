@@ -17,8 +17,8 @@ from smart_open import open
 
 from mesh_transformer.util import clip_by_global_norm
 
-from flask import Flask, request, make_response, jsonify
-app = Flask(__name__)
+# from flask import Flask, request, make_response, jsonify
+# app = Flask(__name__)
 
 requests_queue = Queue()
 
@@ -29,54 +29,94 @@ curl --header "Content-Type: application/json" \
   http://localhost:5000/complete
 """
 
-
-def _build_cors_prelight_response():
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add('Access-Control-Allow-Headers', "*")
-    response.headers.add('Access-Control-Allow-Methods', "*")
-    return response
+import socketio
+import eventlet
+import json
+from contracts.hint import hint_response, hint_request, hint
 
 
-def _corsify_actual_response(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+
+with open("config.json") as json_data_file:
+    config = json.load(json_data_file)
 
 
-@app.route('/complete', methods=['POST', 'OPTIONS'])
-def complete():
-    if request.method == "OPTIONS":  # CORS preflight
-        return _build_cors_prelight_response()
-    elif request.method == "POST":  # The actual request following the preflight
-        content = request.json
+sio = socketio.Server()
+app = socketio.WSGIApp(sio)
 
-        if requests_queue.qsize() > 100:
-            return {"error": "queue full, try again later"}
+@sio.event
+def connect(sid, environ):
+    print('connect ', sid)
 
-        response_queue = Queue()
+@sio.event
+def get_completions(sid, packed_data):
+    data = hint_request(**(json.loads(packed_data)))
+    print("Received:")
+    print(data.text)
+    if requests_queue.qsize() > 100:
+        return {"error": "queue full, try again later"}
+    
+    response_queue = Queue()
 
-        requests_queue.put(({
-                                "context": content["context"],
-                                "top_p": float(content["top_p"]),
-                                "temp": float(content["temp"])
-                            }, response_queue))
+    requests_queue.put(({
+                            "context": data.text,
+                            "top_p": float(0.9),
+                            "temp": float(0.75)
+                        }, response_queue))
 
-        return _corsify_actual_response(jsonify({"completion": response_queue.get()}))
-    else:
-        raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
+    response_text = response_queue.get()
+    extracted_hints = [hint(response_text, 0)] 
+    response = hint_response(data.id, extracted_hints)
+    print("Response:")
+    print(response_text)
+    sio.emit("receive_completions", json.dumps(response.__dict__))
+
+@sio.event
+def disconnect(sid):
+    print('disconnect ', sid)
+
+
+# @app.route('/complete', methods=['POST', 'OPTIONS'])
+# def complete():
+#     if request.method == "OPTIONS":  # CORS preflight
+#         return _build_cors_prelight_response()
+#     elif request.method == "POST":  # The actual request following the preflight
+#         content = request.json
+
+#         if requests_queue.qsize() > 100:
+#             return {"error": "queue full, try again later"}
+
+#         response_queue = Queue()
+
+#         requests_queue.put(({
+#                                 "context": content["context"],
+#                                 "top_p": float(content["top_p"]),
+#                                 "temp": float(content["temp"])
+#                             }, response_queue))
+
+#         return _corsify_actual_response(jsonify({"completion": response_queue.get()}))
+#     else:
+#         raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
 
 
 def parse_args():
     # Parse command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", type=str, default=None, help="Config file location")
+    parser.add_argument("--config", type=str, default="./configs/minipilot.json", help="Config file location")
 
     args = parser.parse_args()
     return args
 
 
 if __name__ == "__main__":
-    threading.Thread(target=app.run, kwargs={"port": 5000, "host": "0.0.0.0"}).start()
+    # threading.Thread(target=app.run, kwargs={"port": 5000, "host": "0.0.0.0"}).start()
+    threading.Thread(target=eventlet.wsgi.server, args=(eventlet.listen((config["address"], config["port"])), app)).start()
+
+    # eventlet.spawn(eventlet.wsgi.server, eventlet.listen((config["address"], config["port"])), app)
+
+    # # eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
+    # while True:
+    #     print("loop")
+    #     eventlet.sleep(5) 
 
     args = parse_args()
     params = json.load(open(args.config))
@@ -182,7 +222,7 @@ if __name__ == "__main__":
 
             output = network.generate(np.array(all_tokenized),
                                       np.array(all_length),
-                                      256,
+                                      16,
                                       {
                                           "top_p": np.array(all_top_p),
                                           "temp": np.array(all_temp)

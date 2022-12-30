@@ -1,7 +1,7 @@
 
 
 import os
-
+import json
 import requests
 
 url = 'http://localhost:5000/complete'
@@ -16,12 +16,12 @@ while True:
     print(context)
     modelContext = context.replace("\n", "\\n")
 
-    data = {'context': 'aaa', "top_p": 0.9, "temp": 0.75}
+    data = {'context': modelContext, "top_p": 0.9, "temp": 0.75}
 
     x = requests.post(url, json = data, headers = {"Content-Type": "application/json"})
-    
+    res = json.loads(x.text)
 
     print("Prediction: ")
-    print(x.text)
+    print(res["completion"].replace("\n", "\\n"))
 
     
