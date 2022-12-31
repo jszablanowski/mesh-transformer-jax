@@ -22,7 +22,7 @@
   "tpu_size": 8,
 
   "bucket": "minipilot-gpt-j",
-  "model_dir": "minipilot",
+  "model_dir": "minipilot_slim",
 
   "train_set": "minipilot.train.index",
   "val_set": {

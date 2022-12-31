@@ -1,7 +1,7 @@
 import argparse
 import json
 import time
-
+import os
 import jax
 import numpy as np
 import optax
@@ -13,6 +13,7 @@ from smart_open import open
 
 from mesh_transformer.util import clip_by_global_norm, to_bf16, to_f16
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "xenon-lantern-369320-1bf527192264.json"
 
 def parse_args():
     # Parse command line arguments

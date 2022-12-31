@@ -28,6 +28,7 @@ from mesh_transformer.transformer_shard import CausalTransformer
 # and only allocate memory as needed.
 os.environ["XLA_PYTHON_CLIENT_PREALLOCATE"] = "false"
 os.environ["XLA_PYTHON_CLIENT_ALLOCATOR"] = "platform"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "xenon-lantern-369320-1bf527192264.json"
 
 DEBUG = False
 

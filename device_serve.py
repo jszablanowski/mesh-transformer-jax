@@ -60,7 +60,7 @@ def get_completions(sid, packed_data):
     requests_queue.put(({
                             "context": data.text,
                             "top_p": float(0.9),
-                            "temp": float(0.75)
+                            "temp": float(1.0)
                         }, response_queue))
 
     response_text = response_queue.get()
@@ -155,10 +155,10 @@ if __name__ == "__main__":
     mesh_shape = (jax.device_count() // cores_per_replica, cores_per_replica)
     devices = np.array(jax.devices()).reshape(mesh_shape)
 
-    with open(f"gs://{bucket}/{model_dir}/meta.json", "r") as f:
-        meta = json.load(f)
+    #with open(f"gs://{bucket}/{model_dir}/meta.json", "r") as f:
+    #    meta = json.load(f)
 
-    ckpt_step = meta["checkpoints"][-1]
+    ckpt_step = 39637
     print(f"using checkpoint {ckpt_step}")
 
     total_batch = per_replica_batch * jax.device_count() // cores_per_replica * 8
