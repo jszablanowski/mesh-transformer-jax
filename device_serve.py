@@ -2,11 +2,12 @@ import argparse
 import json
 import threading
 import time
-from queue import Queue, Empty
+from eventlet.queue import LightQueue, Empty
 
 import jax
 import numpy as np
 import optax
+import asyncio
 
 from mesh_transformer import util
 from mesh_transformer.checkpoint import read_ckpt
@@ -20,7 +21,7 @@ from mesh_transformer.util import clip_by_global_norm
 # from flask import Flask, request, make_response, jsonify
 # app = Flask(__name__)
 
-requests_queue = Queue()
+requests_queue = LightQueue()
 
 """
 curl --header "Content-Type: application/json" \
@@ -40,7 +41,7 @@ with open("config.json") as json_data_file:
     config = json.load(json_data_file)
 
 
-sio = socketio.Server()
+sio = socketio.Server(async_mode='eventlet')
 app = socketio.WSGIApp(sio)
 
 @sio.event
@@ -55,8 +56,13 @@ def get_completions(sid, packed_data):
     if requests_queue.qsize() > 100:
         return {"error": "queue full, try again later"}
     
-    response_queue = Queue()
+    response_queue = LightQueue()
 
+    requests_queue.put(({
+                            "context": data.text,
+                            "top_p": float(0.9),
+                            "temp": float(1.0)
+                        }, response_queue))
     requests_queue.put(({
                             "context": data.text,
                             "top_p": float(0.9),
@@ -64,10 +70,15 @@ def get_completions(sid, packed_data):
                         }, response_queue))
 
     response_text = response_queue.get()
-    extracted_hints = [hint(response_text, 0)] 
+    response_text2 = response_queue.get()
+    extracted_hints = [hint(response_text, 0), hint(response_text2, 0)] 
+
     response = hint_response(data.id, extracted_hints)
+
     print("Response:")
     print(response_text)
+    print("-------")
+    print(response_text2)
     sio.emit("receive_completions", json.dumps(response.__dict__))
 
 @sio.event
@@ -106,21 +117,10 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+def server():
+    eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
 
-if __name__ == "__main__":
-    # threading.Thread(target=app.run, kwargs={"port": 5000, "host": "0.0.0.0"}).start()
-    threading.Thread(target=eventlet.wsgi.server, args=(eventlet.listen((config["address"], config["port"])), app)).start()
-
-    # eventlet.spawn(eventlet.wsgi.server, eventlet.listen((config["address"], config["port"])), app)
-
-    # # eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
-    # while True:
-    #     print("loop")
-    #     eventlet.sleep(5) 
-
-    args = parse_args()
-    params = json.load(open(args.config))
-
+def predictor(params):
     gradient_accumulation_steps = params.get("gradient_accumulation_steps", 1)
     per_replica_batch = params["per_replica_batch"]
     cores_per_replica = params["cores_per_replica"]
@@ -129,12 +129,12 @@ if __name__ == "__main__":
 
     bucket = params["bucket"]
     model_dir = params["model_dir"]
-    layers = params["layers"]
-    d_model = params["d_model"]
-    n_heads = params["n_heads"]
-    n_vocab = params["n_vocab"]
+    # layers = params["layers"]
+    # d_model = params["d_model"]
+    # n_heads = params["n_heads"]
+    # n_vocab = params["n_vocab"]
     seq = params["seq"]
-    norm = params["norm"]
+    # norm = params["norm"]
 
     params["sampler"] = nucleaus_sample
     opt = optax.chain(
@@ -191,7 +191,7 @@ if __name__ == "__main__":
                     if len(all_ctx):
                         break
                     else:
-                        time.sleep(0.01)
+                        eventlet.sleep(0.01)
 
             start = time.time()
             while len(all_ctx) < total_batch:
@@ -219,7 +219,9 @@ if __name__ == "__main__":
 
                 all_tokenized.append(padded_tokens)
                 all_length.append(length)
-
+            print(f"only tokenizer encode done in {time.time() - start:06}s")
+            
+            start2 = time.time()
             output = network.generate(np.array(all_tokenized),
                                       np.array(all_length),
                                       32,
@@ -227,8 +229,38 @@ if __name__ == "__main__":
                                           "top_p": np.array(all_top_p),
                                           "temp": np.array(all_temp)
                                       })
-
+            print(f"only inference done in {time.time() - start2:06}s")
+            
+            start3 = time.time()
             for o, q in zip(output[1][0][:, :, 0], all_q):
                 q.put(tokenizer.decode(o))
 
-            print(f"completion done in {time.time() - start:06}s")
+            print(f"only tokenizer decode done in {time.time() - start3:06}s")
+
+            print(f"all completion done in {time.time() - start:06}s")
+
+if __name__ == "__main__":
+
+    pool = eventlet.GreenPool()
+
+    args = parse_args()
+    params = json.load(open(args.config))
+    pool.spawn(predictor, params)
+
+    eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
+
+
+    # threading.Thread(target=app.run, kwargs={"port": 5000, "host": "0.0.0.0"}).start()
+    # threading.Thread(target=eventlet.wsgi.server, args=(eventlet.listen((config["address"], config["port"])), app)).start()
+
+    # eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
+    # eventlet.spawn(eventlet.wsgi.server, eventlet.listen((config["address"], config["port"])), app)
+
+    # # eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
+    # while True:
+    #     print("loop")
+    #     eventlet.sleep(5) 
+
+
+
+    
