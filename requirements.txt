@@ -1,4 +1,4 @@
-numpy~=1.19.5
+numpy==1.20.3
 tqdm>=4.45.0
 wandb>=0.11.2
 einops~=0.3.0
@@ -8,13 +8,18 @@ optax==0.0.9
 dm-haiku==0.0.5
 git+https://github.com/EleutherAI/lm-evaluation-harness/
 ray[default]==1.4.1
-jax~=0.2.12
+jax==0.2.12
 Flask~=1.1.2
 cloudpickle~=1.3.0
-tensorflow-cpu~=2.6.0
+tensorflow-cpu~=2.7.0
 google-cloud-storage~=1.36.2
+protobuf==3.19.5
+google-auth==1.35.0
+chex==0.1.2
+python-socketio==5.7.2
+eventlet==0.33.2
+smart_open[gcp]==2.2.1
 transformers
-smart_open[gcs]
 func_timeout
 ftfy
 fastapi
