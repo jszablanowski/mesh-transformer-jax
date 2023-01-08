@@ -2,51 +2,44 @@ import argparse
 import json
 import threading
 import time
-from eventlet.queue import LightQueue, Empty
-
 import jax
 import numpy as np
 import optax
 import asyncio
+import socketio
+import eventlet
+import json
+import transformers
 
+
+from eventlet.queue import LightQueue, Empty
 from mesh_transformer import util
 from mesh_transformer.checkpoint import read_ckpt
 from mesh_transformer.sampling import nucleaus_sample
 from mesh_transformer.transformer_shard import CausalTransformer
-import transformers
 from smart_open import open
-
 from mesh_transformer.util import clip_by_global_norm
-
-# from flask import Flask, request, make_response, jsonify
-# app = Flask(__name__)
-
-requests_queue = LightQueue()
-
-"""
-curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"context":"eleutherai", "top_p": 0.9, "temp": 0.75}' \
-  http://localhost:5000/complete
-"""
-
-import socketio
-import eventlet
-import json
 from contracts.hint import hint_response, hint_request, hint
-
 
 
 with open("config.json") as json_data_file:
     config = json.load(json_data_file)
 
-
 sio = socketio.Server(async_mode='eventlet')
 app = socketio.WSGIApp(sio)
+
+ckpt_step = 39637
+requests_queue = LightQueue()
 
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
+
+    # TODO
+    # check api key
+    # if invalid api key, close websocket connection
+    # sio.disconnect(sid)
+    # if valid, continue
 
 @sio.event
 def get_completions(sid, packed_data):
@@ -57,60 +50,36 @@ def get_completions(sid, packed_data):
         return {"error": "queue full, try again later"}
     
     response_queue = LightQueue()
+    start = time.time()
 
-    requests_queue.put(({
-                            "context": data.text,
-                            "top_p": float(0.9),
-                            "temp": float(1.0)
-                        }, response_queue))
-    requests_queue.put(({
-                            "context": data.text,
-                            "top_p": float(0.9),
-                            "temp": float(1.0)
-                        }, response_queue))
+    for _ in range(data.num_completions):
+        requests_queue.put(({
+                                "context": data.text,
+                                "top_p": data.top_p,
+                                "temp": data.temp,
+                                "tokens_length": data.tokens_length
+                            }, response_queue))
 
-    response_text = response_queue.get()
-    response_text2 = response_queue.get()
-    extracted_hints = [hint(response_text, 0), hint(response_text2, 0)] 
+    extracted_hints = []
+    for _ in range(data.num_completions):
+        model_response = response_queue.get()
+        extracted_hints.append(hint(model_response["text"], model_response["probability"]))
 
-    response = hint_response(data.id, extracted_hints)
+    response = hint_response(data.id, extracted_hints, float(time.time() - start) * 1000)
 
     print("Response:")
-    print(response_text)
-    print("-------")
-    print(response_text2)
+    for h in extracted_hints:
+        print(h.text)
+        print("\nProbability: " + str(h.value))
+        print("-------")
+    
     sio.emit("receive_completions", json.dumps(response.__dict__))
 
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
 
-
-# @app.route('/complete', methods=['POST', 'OPTIONS'])
-# def complete():
-#     if request.method == "OPTIONS":  # CORS preflight
-#         return _build_cors_prelight_response()
-#     elif request.method == "POST":  # The actual request following the preflight
-#         content = request.json
-
-#         if requests_queue.qsize() > 100:
-#             return {"error": "queue full, try again later"}
-
-#         response_queue = Queue()
-
-#         requests_queue.put(({
-#                                 "context": content["context"],
-#                                 "top_p": float(content["top_p"]),
-#                                 "temp": float(content["temp"])
-#                             }, response_queue))
-
-#         return _corsify_actual_response(jsonify({"completion": response_queue.get()}))
-#     else:
-#         raise RuntimeError("Weird - don't know how to handle method {}".format(request.method))
-
-
 def parse_args():
-    # Parse command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default="./configs/minipilot.json", help="Config file location")
 
@@ -129,12 +98,7 @@ def predictor(params):
 
     bucket = params["bucket"]
     model_dir = params["model_dir"]
-    # layers = params["layers"]
-    # d_model = params["d_model"]
-    # n_heads = params["n_heads"]
-    # n_vocab = params["n_vocab"]
     seq = params["seq"]
-    # norm = params["norm"]
 
     params["sampler"] = nucleaus_sample
     opt = optax.chain(
@@ -155,10 +119,6 @@ def predictor(params):
     mesh_shape = (jax.device_count() // cores_per_replica, cores_per_replica)
     devices = np.array(jax.devices()).reshape(mesh_shape)
 
-    #with open(f"gs://{bucket}/{model_dir}/meta.json", "r") as f:
-    #    meta = json.load(f)
-
-    ckpt_step = 39637
     print(f"using checkpoint {ckpt_step}")
 
     total_batch = per_replica_batch * jax.device_count() // cores_per_replica * 8
@@ -179,6 +139,7 @@ def predictor(params):
             all_ctx = []
             all_top_p = []
             all_temp = []
+            gen_length = 32
             all_q = []
             while len(all_ctx) < total_batch:
                 try:
@@ -186,6 +147,7 @@ def predictor(params):
                     all_ctx.append(o["context"])
                     all_top_p.append(o["top_p"])
                     all_temp.append(o["temp"])
+                    gen_length = o["tokens_length"]
                     all_q.append(q)
                 except Empty:
                     if len(all_ctx):
@@ -219,28 +181,37 @@ def predictor(params):
 
                 all_tokenized.append(padded_tokens)
                 all_length.append(length)
-            print(f"only tokenizer encode done in {time.time() - start:06}s")
+            print(f"tokenizer encode done in {time.time() - start:06}s")
             
             start2 = time.time()
             output = network.generate(np.array(all_tokenized),
                                       np.array(all_length),
-                                      32,
+                                      gen_length,
                                       {
                                           "top_p": np.array(all_top_p),
                                           "temp": np.array(all_temp)
-                                      })
-            print(f"only inference done in {time.time() - start2:06}s")
+                                      },
+                                      return_logits=True)
+            print(f"inference done in {time.time() - start2:06}s")
             
             start3 = time.time()
-            for o, q in zip(output[1][0][:, :, 0], all_q):
-                q.put(tokenizer.decode(o))
+            for o, l, q in zip(output[1][0][:, :, 0], output[1][2][:, :, 0], all_q):
+                probability = 1.0
+                for token, logits in zip(o, l):
+                    # TODO: check if cpu softmax is faster
+                    probability *= jax.nn.softmax(logits)[token]
+                
+                q.put({
+                    "text": tokenizer.decode(o),
+                    "probability": float(probability)
+                })
 
-            print(f"only tokenizer decode done in {time.time() - start3:06}s")
+
+            print(f"tokenizer decode done in {time.time() - start3:06}s")
 
             print(f"all completion done in {time.time() - start:06}s")
 
 if __name__ == "__main__":
-
     pool = eventlet.GreenPool()
 
     args = parse_args()
@@ -248,19 +219,3 @@ if __name__ == "__main__":
     pool.spawn(predictor, params)
 
     eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
-
-
-    # threading.Thread(target=app.run, kwargs={"port": 5000, "host": "0.0.0.0"}).start()
-    # threading.Thread(target=eventlet.wsgi.server, args=(eventlet.listen((config["address"], config["port"])), app)).start()
-
-    # eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
-    # eventlet.spawn(eventlet.wsgi.server, eventlet.listen((config["address"], config["port"])), app)
-
-    # # eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
-    # while True:
-    #     print("loop")
-    #     eventlet.sleep(5) 
-
-
-
-    
