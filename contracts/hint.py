@@ -25,10 +25,10 @@ class hint_request:
 
     
 class hint_response:
-    def __init__(self, id, hints, duration = 0):
-        self.id = id
+    def __init__(self, hint_id, hints, duration = 0):
+        self.hint_id = hint_id
         self.hints = list(map(lambda x: x.__dict__, hints))
         self.duration = duration
     
-    id = ""
+    hint_id = ""
     hints = None
