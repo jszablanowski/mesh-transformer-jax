@@ -8,13 +8,14 @@ class hint:
     value: 0.0
     
 class hint_request: 
-    def __init__(self, id, text, top_p, temp, tokens_length, num_completions):
+    def __init__(self, id, text, top_p, temp, tokens_length, num_completions, token):
         self.id = id
         self.text = text
         self.top_p = top_p
         self.temp = temp
         self.tokens_length = tokens_length
         self.num_completions = num_completions
+        self.token = token
     
     id = ""
     text = ""
@@ -22,7 +23,7 @@ class hint_request:
     temp = 0.75
     tokens_length = 32
     num_completions = 4
-
+    token = ""
     
 class hint_response:
     def __init__(self, hint_id, hints, duration = 0):

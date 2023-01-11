@@ -1,15 +1,14 @@
 import argparse
 import json
-import threading
 import time
 import jax
 import numpy as np
 import optax
-import asyncio
 import socketio
 import eventlet
 import json
 import transformers
+import requests
 
 
 from eventlet.queue import LightQueue, Empty
@@ -31,19 +30,33 @@ app = socketio.WSGIApp(sio)
 ckpt_step = 39637
 requests_queue = LightQueue()
 
+sessions_validated = set()
+
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
 
-    # TODO
-    # check api key
-    # if invalid api key, close websocket connection
-    # sio.disconnect(sid)
-    # if valid, continue
-
 @sio.event
 def get_completions(sid, packed_data):
     data = hint_request(**(json.loads(packed_data)))
+    global sessions_validated
+    global secret
+
+
+    if not sid in sessions_validated:
+        headers =  {"Content-Type":"application/json"}
+        response = requests.get("https://minipilot.live/users/validate-token", data=json.dumps({
+            "Secret": secret,
+            "Token": data.token
+        }), headers=headers).json()
+
+        if response["tokenIsValid"]:
+            sessions_validated.add(sid)
+            print("Token validated")
+        else:
+            sio.disconnect(sid)
+            return
+
     print("Received:")
     print(data.text)
     if requests_queue.qsize() > 100:
@@ -78,6 +91,11 @@ def get_completions(sid, packed_data):
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
+    try:
+        sessions_validated.remove(sid)
+    except KeyError:
+        pass  # do nothing!
+    
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -217,6 +235,7 @@ if __name__ == "__main__":
     args = parse_args()
     params = json.load(open(args.config))
 
+    global secret
     secret = config["secret"]
     pool.spawn(predictor, params)
 
