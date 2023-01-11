@@ -1,0 +1,14 @@
+[Unit]
+Description=minipilot-mock
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=www-data
+WorkingDirectory=/var/www/minipilot-gpt-j
+ExecStart=/usr/bin/python3 device_serve.py
+
+[Install]
+WantedBy=multi-user.target

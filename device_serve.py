@@ -216,6 +216,8 @@ if __name__ == "__main__":
 
     args = parse_args()
     params = json.load(open(args.config))
+
+    secret = config["secret"]
     pool.spawn(predictor, params)
 
     eventlet.wsgi.server(eventlet.listen((config["address"], config["port"])), app)
