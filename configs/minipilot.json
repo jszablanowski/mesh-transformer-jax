@@ -38,5 +38,7 @@
 
   "name": "minipilot-gpt-j",
   "wandb_project": "minipilot",
-  "comment": ""
+  "comment": "",
+
+  "secret": "<<fill with random secret>>"
 }
