@@ -1,4 +1,5 @@
 {
     "address": "10.128.0.5",
-    "port": 8082
+    "port": 8082,
+    "secret": "<<fill with random secret>>"
 }
