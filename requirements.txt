@@ -17,8 +17,10 @@ protobuf==3.19.5
 google-auth==1.35.0
 chex==0.1.2
 python-socketio==5.7.2
-eventlet==0.33.2
 smart_open[gcp]==2.2.1
+dnspython==2.2.0
+eventlet==0.33.1
+greenlet==2.0.1
 transformers
 func_timeout
 ftfy
