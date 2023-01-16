@@ -86,7 +86,7 @@ def get_completions(sid, packed_data):
         print("\nProbability: " + str(h.value))
         print("-------")
     
-    sio.emit("receive_completions", json.dumps(response.__dict__))
+    sio.emit("receive_completions", json.dumps(response.__dict__), room=sid)
 
 @sio.event
 def disconnect(sid):
