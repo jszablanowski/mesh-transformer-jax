@@ -63,7 +63,6 @@ def get_completions(sid, packed_data):
         return {"error": "queue full, try again later"}
     
     response_queue = LightQueue()
-    start = time.time()
 
     for _ in range(data.num_completions):
         requests_queue.put(({
@@ -74,11 +73,14 @@ def get_completions(sid, packed_data):
                             }, response_queue))
 
     extracted_hints = []
+    duration = 0
     for _ in range(data.num_completions):
         model_response = response_queue.get()
         extracted_hints.append(hint(model_response["text"], model_response["probability"]))
+        if (model_response["duration"] > duration):
+            duration = model_response["duration"]
 
-    response = hint_response(data.id, extracted_hints, float(time.time() - start) * 1000)
+    response = hint_response(data.id, extracted_hints, duration)
 
     print("Response:")
     for h in extracted_hints:
@@ -221,7 +223,8 @@ def predictor(params):
                 
                 q.put({
                     "text": tokenizer.decode(o),
-                    "probability": float(probability)
+                    "probability": float(probability),
+                    "duration": float(time.time() - start) * 1000
                 })
 
 
